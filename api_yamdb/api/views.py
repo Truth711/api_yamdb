@@ -1,28 +1,26 @@
 from http import HTTPStatus
-from rest_framework import viewsets, mixins, permissions, filters
+
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.db.models import Avg
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.decorators import api_view, permission_classes, action
+from rest_framework import filters, mixins, permissions, viewsets
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
-from django.shortcuts import get_object_or_404
-
-from api_yamdb import settings
-from reviews.models import Title, Genre, Category, Review, Comment
+from reviews.models import Category, Comment, Genre, Review, Title
 from users.models import CustomUser
 
-from .permissions import IsAdminOrReadOnly, IsAuMASuOrReadOnly, AuthOrAdmin
-from .serializers import (
-    GenreSerializer, CategorySerializer,
-    ReviewSerializer, CommentSerializer,
-    TitleListRetrieveSerializer, TitleCreateSerializer,
-    AuthSerializer, TokenSerializer,
-    UserSerializer, UserMeSerializer
-)
+from api_yamdb import settings
+
 from .filters import TitleFilter
+from .permissions import AuthOrAdmin, IsAdminOrReadOnly, IsAuMASuOrReadOnly
+from .serializers import (AuthSerializer, CategorySerializer,
+                          CommentSerializer, GenreSerializer, ReviewSerializer,
+                          TitleCreateSerializer, TitleListRetrieveSerializer,
+                          TokenSerializer, UserMeSerializer, UserSerializer)
 
 
 class GenreViewSet(mixins.CreateModelMixin,
@@ -71,8 +69,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         title_id = self.kwargs.get("title_id")
-        new_queryset = Review.objects.filter(title=title_id)
-        return new_queryset
+        return Review.objects.filter(title=title_id)
 
     def perform_create(self, serializer):
         title_id = self.kwargs.get("title_id")
@@ -98,8 +95,7 @@ class CommentViewSet(viewsets.ModelViewSet):
                 pk=self.kwargs.get("title_id")
             )
         )
-        new_queryset = Comment.objects.filter(review=review)
-        return new_queryset
+        return Comment.objects.filter(review=review)
 
     def perform_create(self, serializer):
         review = get_object_or_404(

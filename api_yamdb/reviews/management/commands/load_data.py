@@ -1,6 +1,7 @@
-from django.core.management.base import BaseCommand
 import csv
-from reviews.models import Category, Genre, Title, Review, Comment
+
+from django.core.management.base import BaseCommand
+from reviews.models import Category, Comment, Genre, Review, Title
 from users.models import CustomUser
 
 ThroughModel = Title.genre.through
