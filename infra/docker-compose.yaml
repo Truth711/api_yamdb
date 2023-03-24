@@ -7,8 +7,9 @@ services:
       - /var/lib/postgresql/data/
     env_file:
       - ./.env
+
   web:
-    build: ../api_yamdb
+    image: truth711/yamdb:latest
     restart: always
     volumes:
       - static_value:/app/static/
