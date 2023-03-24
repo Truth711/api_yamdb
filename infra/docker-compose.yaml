@@ -9,7 +9,7 @@ services:
       - ./.env
 
   web:
-    image: truth711/yamdb:latest
+    image: truth711/yamdb_final:latest
     restart: always
     volumes:
       - static_value:/app/static/
