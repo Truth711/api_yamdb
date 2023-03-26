@@ -1,6 +1,9 @@
+![example workflow](https://github.com/truth711/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
+## The project is hosted on the server 51.250.99.68
+
+
 # api_yamdb
 
-![example workflow](https://github.com/truth711/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 ## Project details:
 This is the kind of social network service providing users with the ability to discuss titles (s.a. movies, music, games and so on)
 #### Users roles and abilities:
