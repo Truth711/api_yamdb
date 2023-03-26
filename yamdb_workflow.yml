@@ -19,10 +19,10 @@ jobs:
         pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
         cd api_yamdb/
         pip install -r requirements.txt
-    - name: Test with flake8 and django tests
-      run: |
-        python -m flake8
-        pytest
+    - name: Test with flake8
+      run: python -m flake8
+    - name: Django tests
+      run: pytest
 
   build_and_push_to_docker_hub:
     name: Push Docker image to Docker Hub
@@ -47,6 +47,7 @@ jobs:
           file: api_yamdb/Dockerfile
 
   deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
     steps:
@@ -60,6 +61,7 @@ jobs:
           script: |
             sudo docker-compose stop
             sudo docker-compose rm web
+            sudo docker-compose pull
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
