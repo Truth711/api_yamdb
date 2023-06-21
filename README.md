@@ -1,60 +1,44 @@
-![example workflow](https://github.com/truth711/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
-## The project is hosted on server 51.250.99.68
-
-
 # api_yamdb
 
-## Project details:
-This is the kind of social network service providing users with the ability to discuss titles (s.a. movies, music, games and so on)
-#### Users roles and abilities:
-The platform ensures following user roles:
-- ##### Administrator
-    - Are able to manage titles, genres and categories (full access to CRUD)
-    - Are able to moderate reviews and comments
-    - Are able to manage users (up to its own scope: exc. superadmins)
-    - Act as common user with CRUD-right to manage their own reviews and comments
-- ##### Moderator
-    - Are able to moderate reviews and comments
-    - Act as common user
-- ##### User
-    - Post reviews (1 review per 1 title for unique user) and manage their reviews
-    - Post comments
-- ##### Anonymous user
-    - Read-only access to all entities exc. users
+## api_yamdb - API для сервиса отзывов yamdb.
+REST API для вымышленного сайта ценителей различных произведений искусства yamdb. 
+Реализованы: регистрация и аутентификация по JWT токенам, добавление произведений различных категорий и жанров, отзывы и комментарии, модерация. Все это упаковано в контейнеры Docker`а для быстрого развертывания проекта.
 
-Anonymous users provided with the ability of self-registration. This way grants anonymous default rights within the platform (role: user). After the registration user will receive email with confirmation code. To start acting on the platform user has to send the confirmation code to the platform in order to obtain Access Token (using POST auth/token)
+Произведения делятся на следующие категории: «Книги», «Фильмы», «Музыка». Администратор может расширить список категорий, а также удалять произведения, категории и жанры, назначать роли пользователям. Зарегистрированные пользователи могут оставлять к произведениям текстовые отзывы и ставить оценку в диапазоне от одного до десяти произведениям, комментировать отзывы. Также они могут редактировать и удалять свои отзывы и комментарии, свои оценки произведений.
 
-The only way to authorize POST/PATCH/DELETE is to provide every request with access token.
-Only GET request for Titles, Genres, Categories, Reviews and Comments are available w/o authorization.
+Yamdb был написан мной в рамках учебного проекта, целью которого было изучение Django REST Framework и механизмов аутентификации по токенам. База данных на основе PosgreSQL и Django ORM.
 
-## Technologies:
-- Python 3.7
-- Django 3.2
-- Django Rest Framework 3.12.4
-- PyJWT 2.1.0
-- PostgreSQL
-
-## Installation:
-- Go to infra_sp2/infra/
-- Collect containers and run them:
+Все взаимодействия доступны через API. Используйте следующий URL для ознакомления с возможностями (URL будет автоматически доступен после запуска проекта):
 ```
-docker-compose up -d --build 
+redoc/
 ```
-- Execute the commands one by one:
+
+## Технологии:
+- [Django](https://www.djangoproject.com/)
+- [Django REST Framework](https://www.django-rest-framework.org)
+- [Docker](https://www.docker.com)
+- [Docker-compose](https://docs.docker.com/compose/)
+- [PyJWT](https://pyjwt.readthedocs.io/)
+- [PosgreSQL](https://www.postgresql.org)
+- [Nginx](https://nginx.org/)
+- [Gunicorn](https://gunicorn.org)
+
+## Установка и развертывание проекта:
+- Клонировать репозиторий
+- Создать виртуальное окружение и установить зависимости из requirements.txt
+- Установить Docker и docker-compose
+- Забилдить и поднять проект:
+```
+$ docker-compose up -d --build 
+```
+- Выполнить команды для миграции, создания суперюзера и сбора статики:
 ```
 docker-compose exec web python manage.py migrate
 docker-compose exec web python manage.py createsuperuser
 docker-compose exec web python manage.py collectstatic --no-input
 ```
-- Load test data from fixtures:
+- Загрузить список ингредиентов из фикструры:
 ```
-docker-compose exec web python manage.py loaddata fixtures.json
+docker-compose exec web python manage.py loaddata ingredients.json
 ```
-- Well done!
-
-## API:
-All interactions within the platform are available via API. Use the following URL to get acquainted with the possibilities of the system (URL will be authomatically available after the project launch):
-```
-redoc/
-```
-
+- Готово!
