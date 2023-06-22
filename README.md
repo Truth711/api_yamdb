@@ -1,5 +1,3 @@
-![example workflow](https://github.com/truth711/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
-
 # api_yamdb - API для сервиса отзывов yamdb.
 ## Описание:
 REST API для вымышленного сайта ценителей различных произведений искусства yamdb. 
@@ -61,3 +59,5 @@ docker-compose exec web python manage.py loaddata fixtures.json
 docker-compose up -d
 ```
 - Готово!
+
+![example workflow](https://github.com/truth711/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
