@@ -10,6 +10,7 @@ REST API для вымышленного сайта ценителей разл�
 Проект упакован в три docker-контейнера.
 
 ## Технологии:
+- [Python](https://www.python.org)
 - [Django](https://www.djangoproject.com/)
 - [Django REST Framework](https://www.django-rest-framework.org)
 - [Docker](https://www.docker.com)
